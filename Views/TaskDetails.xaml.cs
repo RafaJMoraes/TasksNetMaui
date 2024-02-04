@@ -10,6 +10,7 @@ public partial class TaskDetails : ContentPage
 
     TaskModelDataBase db;
 
+    public int Id { get; set; }
     public string Description { get; set; }
     public bool Concluded { get; set; }
     public PriorityEnum Priority { get; set; }
@@ -31,16 +32,15 @@ public partial class TaskDetails : ContentPage
             Description = _taskModel.Description;
             Priority = _taskModel.Priority;
             Concluded = _taskModel.Concluded;
+            Id = _taskModel.Id;
 
-            //ConcludedSwitch.IsToggled = Concluded;
             PriorityPicker.SelectedIndex = Priority.GetValue();
         }
         else 
         {
             _taskModel = new TaskModel();
 
-            //ConcludedSwitch.IsToggled = false;
-            PriorityPicker.SelectedIndex = 1;
+            PriorityPicker.SelectedIndex = 0;
 
         }
 
@@ -72,6 +72,10 @@ public partial class TaskDetails : ContentPage
         if (result == 1) {
             await DisplayAlert("Atençao", "Salvo com sucesso", "OK");
         }
+        else
+        {
+            await DisplayAlert("Atençao", "Erro Inesperado", "OK");
+        }
 
 
         await Navigation.PopAsync();
@@ -86,5 +90,19 @@ public partial class TaskDetails : ContentPage
             Priority = Enum.GetValues(typeof(PriorityEnum)).Cast<PriorityEnum>()
                                                 .FirstOrDefault(priority => priority.GetLabel().Equals(prioridadeSelecionada));
         }
+    }
+
+    private async void BtnDeletar_Clicked(object sender, EventArgs e)
+    {
+        var result = await db.removeTask(_taskModel);
+        if (result == 1)
+        {
+            await DisplayAlert("Atençao", "Removida com sucesso", "OK");
+        }
+        else
+        {
+            await DisplayAlert("Atençao", "Erro Inesperado", "OK");
+        }
+        await Navigation.PopAsync();
     }
 }

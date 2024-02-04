@@ -53,5 +53,11 @@ namespace Tasks.Data
             }
         }
 
+        public async Task<int> removeTask(TaskModel task)
+        {
+            await Init();
+           return await Database.DeleteAsync(task);
+        }
+
     }
 }

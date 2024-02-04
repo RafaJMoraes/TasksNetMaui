@@ -20,11 +20,6 @@ namespace Tasks.Views
 
             db = new TaskModelDataBase();
 
-            //iniciaLista();
-
-            //listaOrdenada = (List<TaskModel>)listaTarefas.OrderBy(t => t.Priority).Reverse();
-
-            //taskListView.ItemsSource = listaOrdenada;
         }
 
         protected override async void OnAppearing() 
@@ -50,10 +45,6 @@ namespace Tasks.Views
         private async void taskListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new TaskDetails((TaskModel)e.Item));
-
-            // reiniciar a lista
-            //taskListView.ItemsSource = listaOrdenada;
-
         }
     }
 

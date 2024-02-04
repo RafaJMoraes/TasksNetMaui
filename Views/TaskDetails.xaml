@@ -13,12 +13,16 @@
             HorizontalOptions="Start" />
         <Entry Text="{Binding Description}" Placeholder="Descrição"/>
 
-        <StackLayout>
-            <Label Text="Concluir Tarefa" HorizontalOptions="StartAndExpand" Margin="0,20,20,20"></Label>
-            <Switch 
+        <FlexLayout JustifyContent="SpaceBetween" HeightRequest="80" VerticalOptions="Center" >
+            <Label Text="Concluir Tarefa" VerticalTextAlignment="Center"></Label>
+                <Switch 
                 HorizontalOptions="EndAndExpand"
+                VerticalOptions="Center"
+                InputTransparent="false"
                 IsToggled="{Binding Concluded}"/>
-        </StackLayout>
+            
+           
+        </FlexLayout>
 
         <Label Text="Prioridade da Tarefa:" />
         <Picker x:Name="PriorityPicker" SelectedIndexChanged="OnPriorityPickerSelectedIndexChanged">
@@ -33,13 +37,31 @@
 
 
 
+        
         <Button 
             x:Name="BtnCreate"
             Text="Salvar" 
             VerticalOptions="End" 
+             Margin="0,50,0,0"
             HorizontalOptions="Center"
             Clicked="OnClickedButton"/>
-        
+
+        <Button 
+            x:Name="BtnDeletar"
+            Text="Deletar" 
+            VerticalOptions="End" 
+            BackgroundColor="Red"
+            Margin="0,50,0,0"
+            HorizontalOptions="Center"
+            Clicked="BtnDeletar_Clicked"
+            >
+            <Button.Triggers>
+                <DataTrigger TargetType="Button" Binding="{Binding Id}" Value="0">
+                    <Setter Property="IsVisible" Value="False" />
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
 
     </VerticalStackLayout>
 </ContentPage>
