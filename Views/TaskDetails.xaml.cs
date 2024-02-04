@@ -61,7 +61,7 @@ public partial class TaskDetails : ContentPage
         tasks.Add(taskModel);
 
         Console.WriteLine(taskModel.Priority.GetLabel());
-        
+
         await Navigation.PopAsync();
     }
 

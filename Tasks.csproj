@@ -49,6 +49,10 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Remove="PriorityToColorConverter.cs" />
+	</ItemGroup>
+
+	<ItemGroup>
 	  <None Remove="Resources\Images\check.jpeg" />
 	  <None Remove="Resources\Images\plus.jpeg" />
 	</ItemGroup>

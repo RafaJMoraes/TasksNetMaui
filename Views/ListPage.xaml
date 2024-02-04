@@ -1,27 +1,52 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<ContentPage x:Class="Tasks.Views.ListPage"
+             xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="Tasks.Views.ListPage"
+             xmlns:enums="clr-namespace:Tasks.Enuns;assembly=Tasks"
              Title="ListPage">
     
     <ContentPage.ToolbarItems >
         <ToolbarItem Clicked="OnDetails" Text="+" IconImageSource="plus.jpeg" Order="Default"/>
     </ContentPage.ToolbarItems>
 
-    <ListView x:Name="taskListView">
+    <ListView x:Name="taskListView" ItemsSource="{Binding taskListView}" ItemTapped="taskListView_ItemTapped">
         <ListView.ItemTemplate>
             <DataTemplate >
                 <ViewCell>
-                    <Frame BorderColor="Gray" CornerRadius="8">
-                        <StackLayout Padding="20" Spacing="10">
-                            <!-- Descrição -->
-                            <Label Text="{Binding Descricao}" FontSize="18" />
+                    <Frame BorderColor="Gray" CornerRadius="8" Margin="15" HeightRequest="75">
+                        <StackLayout Margin="10,0,0,0">
+                            <!-- Descrição  e Conlusao na mesma row-->
+                            
+                                <FlexLayout JustifyContent="SpaceBetween">
+                                    <Label Text="{Binding Description}" FontSize="18" HorizontalOptions="Start"/>
+                              
+                                <!-- Faixa de prioridade -->
 
-                            <!-- Ícone para indicar a conclusão -->
-                            <Image Source="{Binding ConcluidaIcone}" HeightRequest="24" IsVisible="{Binding Concluida}" />
+                                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                                    <Image HorizontalOptions="End"
+                                   IsVisible="{Binding Concluded}"
+                                           Margin="0,0,20,0"
+                                   Source="check.jpeg"
+                                   MaximumHeightRequest="48"/>
 
-                            <!-- Faixa de prioridade -->
-                            <BoxView BackgroundColor="{Binding PrioridadeCor}" HeightRequest="8" />
+                                    <BoxView HeightRequest="50" WidthRequest="50" HorizontalOptions="End" >
+                                        <BoxView.Triggers>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.HIGH}">
+                                                <Setter Property="BackgroundColor" Value="Red" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.MEDIUM}">
+                                                <Setter Property="BackgroundColor" Value="Yellow" />
+                                            </DataTrigger>
+                                            <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.LOW}">
+                                                <Setter Property="BackgroundColor" Value="Green" />
+                                            </DataTrigger>
+                                        </BoxView.Triggers>
+                                    </BoxView>
+                                    </HorizontalStackLayout>
+                                </FlexLayout>
+                              
+                            
+
                         </StackLayout>
                     </Frame>
                 </ViewCell>
