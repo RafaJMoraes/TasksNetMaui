@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using Tasks.Data;
 
 namespace Tasks;
 
@@ -18,7 +19,7 @@ public static class MauiProgram
 #if DEBUG
 		builder.Logging.AddDebug();
 #endif
-
+		builder.Services.AddSingleton<TaskModelDataBase>();
 		return builder.Build();
 	}
 }

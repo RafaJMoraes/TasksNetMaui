@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SQLite;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,10 +9,9 @@ using Tasks.Enuns;
 
 namespace Tasks.Model
 {
-    public class TaskModel : INotifyPropertyChanged
+    public class TaskModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
         public string Description { get; set; }
         public bool Concluded { get; set; }
