@@ -12,9 +12,14 @@ namespace Tasks.Data
     {
         SQLiteAsyncConnection Database;
 
+        public TaskModelDataBase()
+        {
+
+        }
+
         async Task Init() 
         {
-            if (Database == null) 
+            if (Database is not null) 
             {
                 return;
             }

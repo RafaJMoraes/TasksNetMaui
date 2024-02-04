@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using Tasks.Data;
 using Tasks.Enuns;
 using Tasks.Model;
 
@@ -7,27 +8,39 @@ namespace Tasks.Views;
 public partial class TaskDetails : ContentPage
 {
 
+    TaskModelDataBase db;
+
     public string Description { get; set; }
     public bool Concluded { get; set; }
     public PriorityEnum Priority { get; set; }
 
     public List<string> Priorities { get; set; }
 
+    TaskModel _taskModel;
+
 
     public List<TaskModel> tasks = new List<TaskModel>();   
     public TaskDetails(TaskModel taskModel)
 	{
 		InitializeComponent();
+        db = new TaskModelDataBase();
 
         if (taskModel.Id != 0)
         {
-            Description = taskModel.Description;
-            Priority = taskModel.Priority;
-            Concluded = taskModel.Concluded;
+            _taskModel = taskModel;
+            Description = _taskModel.Description;
+            Priority = _taskModel.Priority;
+            Concluded = _taskModel.Concluded;
+
+            //ConcludedSwitch.IsToggled = Concluded;
+            PriorityPicker.SelectedIndex = Priority.GetValue();
         }
         else 
         {
-            //
+            _taskModel = new TaskModel();
+
+            //ConcludedSwitch.IsToggled = false;
+            PriorityPicker.SelectedIndex = 1;
 
         }
 
@@ -40,9 +53,6 @@ public partial class TaskDetails : ContentPage
 
         BindingContext = this;
 
-
-        ConcludedSwitch.IsToggled = false;
-        PriorityPicker.SelectedIndex = 0;
     }
     public void OnPriorityPickerSelectedIndexChanged(object sender, EventArgs e)
     {
@@ -52,15 +62,17 @@ public partial class TaskDetails : ContentPage
 
     public async void OnClickedButton(object sender, EventArgs e) 
     {
-        TaskModel taskModel = new TaskModel();  
-        taskModel.Description = Description;
-        taskModel.Priority = Priority;
-        taskModel.Concluded = Concluded;
-        taskModel.Id = 1;
+        
+            _taskModel.Description = Description;
+            _taskModel.Priority = Priority;
+            _taskModel.Concluded = Concluded;
 
-        tasks.Add(taskModel);
+        var result = await db.AddOrUpdateTaskModelAsync(_taskModel);
 
-        Console.WriteLine(taskModel.Priority.GetLabel());
+        if (result == 1) {
+            await DisplayAlert("Atençao", "Salvo com sucesso", "OK");
+        }
+
 
         await Navigation.PopAsync();
     }

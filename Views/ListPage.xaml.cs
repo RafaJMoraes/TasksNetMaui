@@ -1,5 +1,7 @@
 
 
+using System.Linq;
+using Tasks.Data;
 using Tasks.Model;
 
 namespace Tasks.Views
@@ -7,51 +9,42 @@ namespace Tasks.Views
     public partial class ListPage : ContentPage
     {
 
+        TaskModelDataBase db;
+
         public static List<TaskModel> listaTarefas = new List<TaskModel>();
-        public static List<TaskModel> listaOrdenada = new List<TaskModel>();
+        public List<TaskModel> listaOrdenada = new List<TaskModel>();
 
         public ListPage()
         {
             InitializeComponent();
 
-            TaskModel taskModel = new TaskModel();
-            taskModel.Id = 2;
-            taskModel.Priority = Enuns.PriorityEnum.LOW;
-            taskModel.Description = "Tarefa Mocada";
-            taskModel.Concluded = true;
+            db = new TaskModelDataBase();
 
-            TaskModel taskModel1 = new TaskModel();
-            taskModel1.Id = 3;
-            taskModel1.Priority = Enuns.PriorityEnum.HIGH;
-            taskModel1.Description = "Tarefa Mocada 1";
-            taskModel1.Concluded = false;
+            //iniciaLista();
 
-            TaskModel taskModel2 = new TaskModel();
-            taskModel2.Id = 4;
-            taskModel2.Priority = Enuns.PriorityEnum.MEDIUM;
-            taskModel2.Description = "Tarefa Mocada 2";
-            taskModel2.Concluded = false;
+            //listaOrdenada = (List<TaskModel>)listaTarefas.OrderBy(t => t.Priority).Reverse();
 
-            TaskModel taskModel3 = new TaskModel();
-            taskModel3.Id = 5;
-            taskModel3.Priority = Enuns.PriorityEnum.MEDIUM;
-            taskModel3.Description = "Tarefa Mocada 3";
-            taskModel3.Concluded = false;
+            //taskListView.ItemsSource = listaOrdenada;
+        }
 
-            listaTarefas.Add(taskModel);
-            listaTarefas.Add(taskModel1);
-            listaTarefas.Add(taskModel2);
-            listaTarefas.Add(taskModel3);
+        protected override async void OnAppearing() 
+        {
+            base.OnAppearing();
+            listaOrdenada = await db.getAllTasks();
+            taskListView.ItemsSource = listaOrdenada.OrderBy(t => t.Priority).Reverse().ToList();
 
-            listaOrdenada = (List<TaskModel>)listaTarefas.OrderBy(t => t.Priority).Reverse();
+        }
 
+        private async void iniciaLista() { 
+            var lista = await db.getAllTasks();
+            listaOrdenada = lista.OrderBy(t => t.Priority).Reverse().ToList();
             taskListView.ItemsSource = listaOrdenada;
         }
 
         public async void OnDetails(object Sender, EventArgs e)
         {
             await Navigation.PushAsync(new TaskDetails(new TaskModel()));
-            taskListView.ItemsSource = listaOrdenada;
+            iniciaLista();
         }
 
         private async void taskListView_ItemTapped(object sender, ItemTappedEventArgs e)
@@ -59,7 +52,7 @@ namespace Tasks.Views
             await Navigation.PushAsync(new TaskDetails((TaskModel)e.Item));
 
             // reiniciar a lista
-            taskListView.ItemsSource = listaOrdenada;
+            //taskListView.ItemsSource = listaOrdenada;
 
         }
     }

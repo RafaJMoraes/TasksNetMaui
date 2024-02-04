@@ -17,20 +17,19 @@
                 <ViewCell >
 
                     <StackLayout Margin="20,0,0,0" HeightRequest="80" VerticalOptions="Center">
-                        <!-- Descrição e Conclusão na mesma linha -->
+                        
                         <FlexLayout JustifyContent="SpaceBetween" HeightRequest="80" VerticalOptions="Center">
-                            <!-- Descrição -->
+
                             <Label Text="{Binding Description}" FontSize="15" HorizontalOptions="Start" VerticalTextAlignment="Center"/>
 
-                            <!-- Faixa de prioridade -->
                             <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
-                                <!-- Ícone de Conclusão -->
+
                                 <Image IsVisible="{Binding Concluded}" Source="check.jpeg" HeightRequest="32" Margin="0,0,20,0" HorizontalOptions="End"/>
 
-                                <!-- Caixa de prioridade -->
+
                                 <BoxView HeightRequest="40" WidthRequest="40" HorizontalOptions="End" Margin="0,0,20,0">
                                     <BoxView.Triggers>
-                                        <!-- Triggers para definir a cor da caixa com base na prioridade -->
+
                                         <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.HIGH}">
                                             <Setter Property="Color" Value="Red" />
                                         </DataTrigger>
@@ -45,33 +44,6 @@
                             </HorizontalStackLayout>
                         </FlexLayout>
                     </StackLayout>
-                    <!--<StackLayout Margin="20,0,0,0" HeightRequest="80" VerticalOptions="Center">
-                        --><!-- Descrição  e Conlusao na mesma row--><!--
-                        <FlexLayout JustifyContent="SpaceBetween" HeightRequest="80" VerticalOptions="Center">
-                            <Label Text="{Binding Description}" FontSize="15" HorizontalOptions="Start"/>
-                            --><!-- Faixa de prioridade --><!--
-                            <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                                <Image HorizontalOptions="End"
-                                   IsVisible="{Binding Concluded}"
-                                           Margin="0,0,20,0"
-                                   Source="check.jpeg"
-                                   MaximumHeightRequest="32"/>
-                                <BoxView HeightRequest="40" WidthRequest="40" HorizontalOptions="End" >
-                                    <BoxView.Triggers>
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.HIGH}">
-                                            <Setter Property="BackgroundColor" Value="Red" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.MEDIUM}">
-                                            <Setter Property="BackgroundColor" Value="Yellow" />
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.LOW}">
-                                            <Setter Property="BackgroundColor" Value="Green" />
-                                        </DataTrigger>
-                                    </BoxView.Triggers>
-                                </BoxView>
-                            </HorizontalStackLayout>
-                        </FlexLayout>
-                    </StackLayout>-->
 
                 </ViewCell>
             </DataTemplate>
