@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Tasks.Views.TaskDetails"
+             Title="TaskDetails">
+    <VerticalStackLayout
+        Margin="20,15,15,20"
+        VerticalOptions="FillAndExpand">
+        <Label 
+            Margin="0,0,0,15"
+            Text="Descrição da Tarefa"
+            VerticalOptions="Center" 
+            HorizontalOptions="Start" />
+        <Entry Text="{Binding Description}" Placeholder="Descrição"/>
+
+        <VerticalStackLayout>
+            <Label Text="Concluir Tarefa" HorizontalOptions="Start" Margin="0,20,20,20"></Label>
+            <Switch 
+                x:Name="ConcludedSwitch"
+                HorizontalOptions="Start" 
+                BindingContext="Concluded" 
+                Margin="0,0,0,0" />
+        </VerticalStackLayout>
+
+        <Label Text="Prioridade da Tarefa:" />
+        <Picker x:Name="PriorityPicker" SelectedIndexChanged="OnPriorityPickerSelectedIndexChanged">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Baixa</x:String>
+                    <x:String>Média</x:String>
+                    <x:String>Alta</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+
+
+
+        <Button 
+            x:Name="BtnCreate"
+            Text="Criar Tarefa" 
+            VerticalOptions="End" 
+            HorizontalOptions="Center"
+            Clicked="OnClickedButton"/>
+        
+
+    </VerticalStackLayout>
+</ContentPage>
