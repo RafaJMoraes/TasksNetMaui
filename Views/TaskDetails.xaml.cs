@@ -10,6 +10,7 @@ public partial class TaskDetails : ContentPage
 
     TaskModelDataBase db;
 
+    public string titleDetails {get; set;}
     public int Id { get; set; }
     public string Description { get; set; }
     public bool Concluded { get; set; }
@@ -35,12 +36,17 @@ public partial class TaskDetails : ContentPage
             Id = _taskModel.Id;
 
             PriorityPicker.SelectedIndex = Priority.GetValue();
+
+            titleDetails = "Atualizar Tarefa";
         }
         else 
         {
             _taskModel = new TaskModel();
 
             PriorityPicker.SelectedIndex = 0;
+
+            titleDetails = "Nova Tarefa";
+
 
         }
 
@@ -67,6 +73,12 @@ public partial class TaskDetails : ContentPage
             _taskModel.Priority = Priority;
             _taskModel.Concluded = Concluded;
 
+        if(String.IsNullOrEmpty(Description))
+        {
+            await DisplayAlert("Ops", "Descrição é obrigatória.", "OK");
+            return;
+        }
+
         var result = await db.AddOrUpdateTaskModelAsync(_taskModel);
 
         if (result == 1) {
@@ -83,7 +95,7 @@ public partial class TaskDetails : ContentPage
 
     private void PrioridadeCollectionView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        // Aqui você pode acessar o item selecionado usando e.PreviousSelection e e.CurrentSelection
+       
         if (e.CurrentSelection != null && e.CurrentSelection.Count > 0)
         {
             var prioridadeSelecionada = e.CurrentSelection[0].ToString();

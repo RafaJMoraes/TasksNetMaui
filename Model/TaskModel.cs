@@ -21,5 +21,10 @@ namespace Tasks.Model
         {
             return Priority.GetColor();
         }
+
+        public string getPriorityLabel() 
+        {
+            return Priority.GetLabel();
+        }
     }
 }

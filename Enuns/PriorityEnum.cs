@@ -10,11 +10,11 @@ namespace Tasks.Enuns
     public enum PriorityEnum
     {
         [ValueAttributeCollor(0, "#FF0000","Baixa")]
-        LOW,
+        BAIXA,
         [ValueAttributeCollor(1, "#FFFF00", "Média")]
-        MEDIUM,
+        MEDIA,
         [ValueAttributeCollor(2, "#00FF00", "Alta")]
-        HIGH,
+        ALTA,
     }
 
     public class ValueAttributeCollor : Attribute

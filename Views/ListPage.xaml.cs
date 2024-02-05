@@ -1,18 +1,20 @@
 
 
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
+using System.Windows.Input;
 using Tasks.Data;
+using Tasks.Enuns;
 using Tasks.Model;
 
 namespace Tasks.Views
 {
-    public partial class ListPage : ContentPage
+    public partial class ListPage : ContentPage, INotifyPropertyChanged
     {
 
         TaskModelDataBase db;
 
-        public static List<TaskModel> listaTarefas = new List<TaskModel>();
-        public List<TaskModel> listaOrdenada = new List<TaskModel>();
 
         public ListPage()
         {
@@ -25,27 +27,26 @@ namespace Tasks.Views
         protected override async void OnAppearing() 
         {
             base.OnAppearing();
-            listaOrdenada = await db.getAllTasks();
-            taskListView.ItemsSource = listaOrdenada.OrderBy(t => t.Priority).Reverse().ToList();
 
-        }
-
-        private async void iniciaLista() { 
             var lista = await db.getAllTasks();
-            listaOrdenada = lista.OrderBy(t => t.Priority).Reverse().ToList();
-            taskListView.ItemsSource = listaOrdenada;
+
+            taskListView.ItemsSource = lista.OrderBy(t => t.Priority).Reverse().ToList();
+
         }
+
+ 
 
         public async void OnDetails(object Sender, EventArgs e)
         {
             await Navigation.PushAsync(new TaskDetails(new TaskModel()));
-            iniciaLista();
+         
         }
 
         private async void taskListView_ItemTapped(object sender, ItemTappedEventArgs e)
         {
             await Navigation.PushAsync(new TaskDetails((TaskModel)e.Item));
         }
+   
     }
 
 }

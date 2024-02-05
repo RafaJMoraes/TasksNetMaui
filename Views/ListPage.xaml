@@ -3,10 +3,12 @@
              xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:enums="clr-namespace:Tasks.Enuns;assembly=Tasks"
-             Title="ListPage">
+             Title="Lista de Tarefas"       
+            >
 
     <ContentPage.ToolbarItems >
         <ToolbarItem Clicked="OnDetails" Text="+" IconImageSource="plus.jpeg" Order="Default"/>
+
     </ContentPage.ToolbarItems>
 
     <ListView x:Name="taskListView" ItemsSource="{Binding taskListView}"
@@ -17,30 +19,39 @@
                 <ViewCell >
 
                     <StackLayout Margin="20,0,0,0" HeightRequest="80" VerticalOptions="Center">
-                        
+
                         <FlexLayout JustifyContent="SpaceBetween" HeightRequest="80" VerticalOptions="Center">
 
                             <Label Text="{Binding Description}" FontSize="15" HorizontalOptions="Start" VerticalTextAlignment="Center"/>
 
-                            <HorizontalStackLayout HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                            <HorizontalStackLayout>
 
                                 <Image IsVisible="{Binding Concluded}" Source="check.jpeg" HeightRequest="32" Margin="0,0,20,0" HorizontalOptions="End"/>
 
-
-                                <BoxView HeightRequest="40" WidthRequest="40" HorizontalOptions="End" Margin="0,0,20,0">
-                                    <BoxView.Triggers>
-
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.HIGH}">
-                                            <Setter Property="Color" Value="Red" />
+                                <Frame HeightRequest="40" 
+                                                        WidthRequest="80" 
+                                                        HorizontalOptions="End" 
+                                                        Margin="0,0,20,0"
+                                                        Padding="5"
+                                                        FlowDirection="LeftToRight">
+                                    <Label Text="{Binding Priority}"
+                                                HorizontalOptions="Center" 
+                                                VerticalOptions="Center"
+                                                TextColor="White">
+                                      
+                                    </Label>
+                                    <Frame.Triggers>
+                                        <DataTrigger TargetType="Frame" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.ALTA}">
+                                            <Setter Property="BackgroundColor" Value="Red" />
                                         </DataTrigger>
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.MEDIUM}">
-                                            <Setter Property="Color" Value="Yellow" />
+                                        <DataTrigger TargetType="Frame" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.MEDIA}">
+                                            <Setter Property="BackgroundColor" Value="Yellow" />
                                         </DataTrigger>
-                                        <DataTrigger TargetType="BoxView" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.LOW}">
-                                            <Setter Property="Color" Value="Green" />
+                                        <DataTrigger TargetType="Frame" Binding="{Binding Priority}" Value="{x:Static enums:PriorityEnum.BAIXA}">
+                                            <Setter Property="BackgroundColor" Value="Green" />
                                         </DataTrigger>
-                                    </BoxView.Triggers>
-                                </BoxView>
+                                    </Frame.Triggers>
+                                </Frame>
                             </HorizontalStackLayout>
                         </FlexLayout>
                     </StackLayout>
